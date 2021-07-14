@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Welcome</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+</head>
+<body>
+
+<div class="container">
+<h1>Welcome</h1>
+<h2 th:utext="${message}">..!..</h2>
+
+<!--
+
+   In Thymeleaf the equivalent of
+   JSP's ${pageContext.request.contextPath}/edit.html
+   would be @{/edit.html}
+
+   -->
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th scope="col"> Name </th>
+        <th scope="col"> Path </th>
+        <th scope="col"> Version </th>
+        <th scope="col"> Parent </th>
+        <th scope="col"> Maven Name </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${projectList == null}">
+        <td colspan="2"> No Projects Available </td>
+    </tr>
+    <tr th:each="project : ${projectList}">
+        <td><a th:href="@{/details/{id}(id=${project.id})}"><span th:text="${project.name}"> Name </span></a></td>
+        <td><span th:text="${project.path}"> Path </span></td>
+        <td><span th:text="${project.getGroupId()}"> Version </span> :
+            <span th:text="${project.getArtifactId()}"> Version </span> :
+            <strong th:text="${project.getVersion()}" style=""> Version </strong></td>
+        <td><span th:text="${project.getArtifactParentVersion()}"> Parent </span></td>
+        <td><span th:text="${project.nameMaven}"> Maven Name </span></td>
+    </tr>
+    </tbody>
+</table>
+
+<a th:href="@{/personList}">Person List</a>
+
+<a th:href="@{/getmaven}">get maven</a>
+
+
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+</body>
+
+
+</html>

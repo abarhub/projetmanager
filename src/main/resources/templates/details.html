@@ -1,0 +1,109 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Welcome</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+</head>
+<body>
+
+<div class="container">
+<h1>Welcome</h1>
+<h2 th:utext="${message}">..!..</h2>
+
+<!--
+
+   In Thymeleaf the equivalent of
+   JSP's ${pageContext.request.contextPath}/edit.html
+   would be @{/edit.html}
+
+   -->
+
+    <a th:href="@{/}">Retour</a>
+
+    <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col"> Name </th>
+                <th scope="col"> Value </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${projet == null}">
+                <td colspan="2"> No Project Selected </td>
+            </tr>
+            <tr th:if="${projet != null}">
+                <td><span> Nom </span></td>
+                <td><span th:text="${projet.name}"> Nom </span></td>
+            </tr>
+            <tr th:if="${projet != null}">
+                <td><span> groupId </span></td>
+                <td><span th:text="${projet.groupId}"> Nom </span></td>
+            </tr>
+            <tr th:if="${projet != null}">
+                <td><span> artifactId </span></td>
+                <td><span th:text="${projet.artifactId}"> Nom </span></td>
+            </tr>
+            <tr th:if="${projet != null}">
+                <td><span> version </span></td>
+                <td><span th:text="${projet.version}"> Nom </span></td>
+            </tr>
+            <tr th:if="${projet != null}">
+                <td><span> groupId Parent </span></td>
+                <td><span th:text="${projet.groupIdParent}"> Nom </span></td>
+            </tr>
+            <tr th:if="${projet != null}">
+                <td><span> artifactId Parent </span></td>
+                <td><span th:text="${projet.artifactIdParent}"> Nom </span></td>
+            </tr>
+            <tr th:if="${projet != null}">
+                <td><span> version Parent </span></td>
+                <td><span th:text="${projet.versionParent}"> Nom </span></td>
+            </tr>
+            <tr th:if="${projet != null}">
+                <td><span> Name Maven </span></td>
+                <td><span th:text="${projet.nameMaven}"> Nom </span></td>
+            </tr>
+            <tr th:if="${projet != null && projet.gitStatusDto!=null}">
+                <td><span> Commit </span></td>
+                <td><span th:text="${projet.gitStatusDto.getLastCommit()}"> Commit </span></td>
+            </tr>
+            <tr th:if="${projet != null && projet.gitStatusDto!=null}">
+                <td><span> Branches </span></td>
+                <td><span th:text="${projet.gitStatusDto.getBranches()}"> Branches </span></td>
+            </tr>
+            <tr th:if="${projet != null && projet.gitStatusDto!=null}">
+                <td><span> Clean </span></td>
+                <td><span th:text="${projet.gitStatusDto.isClean()}"> Clean </span></td>
+            </tr>
+            <tr th:if="${projet != null && projet.gitStatusDto!=null}">
+                <td><span> Date commit </span></td>
+                <td><span th:text="${projet.gitStatusDto.getDateTimeLastCommit()}"> Clean </span></td>
+            </tr>
+            <tr th:if="${projet != null && projet.gitStatusDto!=null}">
+                <td><span> Auteur commit </span></td>
+                <td><span th:text="${projet.gitStatusDto.getAuteur()}"> Clean </span></td>
+            </tr>
+            </tbody>
+        </table>
+
+    <div th:if="${projet!=null&&projet.dependancy!=null}">
+        <pre th:text="${projet.dependancy}"></pre>
+    </div>
+
+<!--<a th:href="@{/personList}">Person List</a>-->
+
+<!--<a th:href="@{/getmaven}">get maven</a>-->
+
+
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+</body>
+
+
+</html>
