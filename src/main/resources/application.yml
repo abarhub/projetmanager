@@ -4,3 +4,15 @@ server:
 maven.dir:
 
 projets.dir:
+
+
+script:
+  global:
+    maven-build-sans-tests:
+      if-file: pom.xml
+      cmd: mvn clean install -DskipTests
+    echo:
+      cmd: echo coucou2
+    echo2:
+      cmd: pause
+      terminal: true

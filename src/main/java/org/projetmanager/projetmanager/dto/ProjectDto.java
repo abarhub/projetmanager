@@ -1,5 +1,8 @@
 package org.projetmanager.projetmanager.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ProjectDto {
 
     private long id;
@@ -14,6 +17,12 @@ public class ProjectDto {
     private String versionParent;
     private String dependancy;
     private GitStatusDto gitStatusDto;
+
+    private List<ActionDto> listeActions;
+
+    private String nomNpm;
+
+    private String versionNpm;
 
     public long getId() {
         return id;
@@ -125,5 +134,36 @@ public class ProjectDto {
 
     public void setGitStatusDto(GitStatusDto gitStatusDto) {
         this.gitStatusDto = gitStatusDto;
+    }
+
+    public List<ActionDto> getListeActions() {
+        return listeActions;
+    }
+
+    public void setListeActions(List<ActionDto> listeActions) {
+        this.listeActions = listeActions;
+    }
+
+    public void addActions(ActionDto actionDto){
+        if(listeActions==null){
+            listeActions=new ArrayList<>();
+        }
+        listeActions.add(actionDto);
+    }
+
+    public String getNomNpm() {
+        return nomNpm;
+    }
+
+    public void setNomNpm(String nomNpm) {
+        this.nomNpm = nomNpm;
+    }
+
+    public String getVersionNpm() {
+        return versionNpm;
+    }
+
+    public void setVersionNpm(String versionNpm) {
+        this.versionNpm = versionNpm;
     }
 }

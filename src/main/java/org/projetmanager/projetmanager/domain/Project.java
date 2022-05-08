@@ -1,20 +1,19 @@
 package org.projetmanager.projetmanager.domain;
 
 import java.nio.file.Path;
+import java.util.Set;
 
 public class Project {
 
     private long id;
     private String name;
     private Path path;
-    private Path pom;
-    private String groupId;
-    private String artifactId;
-    private String version;
-    private String nameMaven;
-    private String groupIdParent;
-    private String artifactIdParent;
-    private String versionParent;
+
+
+    private ProjectMaven projectMaven;
+
+    private ProjectNpm projectNpm;
+    private Set<ProjectTypeEnum> projectType;
 
     public long getId() {
         return id;
@@ -40,67 +39,27 @@ public class Project {
         this.path = path;
     }
 
-    public Path getPom() {
-        return pom;
+    public ProjectMaven getProjectMaven() {
+        return projectMaven;
     }
 
-    public void setPom(Path pom) {
-        this.pom = pom;
+    public void setProjectMaven(ProjectMaven projectMaven) {
+        this.projectMaven = projectMaven;
     }
 
-    public String getGroupId() {
-        return groupId;
+    public ProjectNpm getProjectNpm() {
+        return projectNpm;
     }
 
-    public void setGroupId(String groupId) {
-        this.groupId = groupId;
+    public void setProjectNpm(ProjectNpm projectNpm) {
+        this.projectNpm = projectNpm;
     }
 
-    public String getArtifactId() {
-        return artifactId;
+    public Set<ProjectTypeEnum> getProjectType() {
+        return projectType;
     }
 
-    public void setArtifactId(String artifactId) {
-        this.artifactId = artifactId;
-    }
-
-    public String getVersion() {
-        return version;
-    }
-
-    public void setVersion(String version) {
-        this.version = version;
-    }
-
-    public String getNameMaven() {
-        return nameMaven;
-    }
-
-    public void setNameMaven(String nameMaven) {
-        this.nameMaven = nameMaven;
-    }
-
-    public String getGroupIdParent() {
-        return groupIdParent;
-    }
-
-    public void setGroupIdParent(String groupIdParent) {
-        this.groupIdParent = groupIdParent;
-    }
-
-    public String getArtifactIdParent() {
-        return artifactIdParent;
-    }
-
-    public void setArtifactIdParent(String artifactIdParent) {
-        this.artifactIdParent = artifactIdParent;
-    }
-
-    public String getVersionParent() {
-        return versionParent;
-    }
-
-    public void setVersionParent(String versionParent) {
-        this.versionParent = versionParent;
+    public void setProjectType(Set<ProjectTypeEnum> projectType) {
+        this.projectType = projectType;
     }
 }

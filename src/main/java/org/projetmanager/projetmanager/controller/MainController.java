@@ -42,7 +42,7 @@ public class MainController {
     }
 
     @RequestMapping(value = "/details/{id}", method = RequestMethod.GET)
-    public String details(@PathVariable("id") long id, Model model) {
+    public String details(@PathVariable("id") long id, Model model) throws InterruptedException {
         LOGGER.info("details");
         var projet = projectService.getDetails(id);
         model.addAttribute("projet", projet);

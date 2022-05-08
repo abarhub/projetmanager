@@ -23,11 +23,14 @@ public class MavenService {
 
     private String mavenDir;
 
-    public MavenService(String mavenDir) {
+    private RunService runService;
+
+    public MavenService(String mavenDir, RunService runService) {
         this.mavenDir = mavenDir;
+        this.runService=runService;
     }
 
-    public String getDepandences(Path p){
+    public String getDepandences(Path p) throws InterruptedException {
         String s="";
         String mvn="mvn";
         if(StringUtils.hasText(mvn)){
@@ -70,53 +73,12 @@ public class MavenService {
             LOGGER.error("error:{}",x);
         };
 
-        int res=run(s,outpout,error,p);
+        int res=runService.runNow(s,outpout,error,p,false);
 
         if(res==0){
             return String.join("\n", liste);
         } else {
             return "";
-        }
-    }
-
-    private int run(String cmd, Consumer<String> outpout, Consumer<String> error, Path p){
-
-        ProcessBuilder processBuilder = new ProcessBuilder();
-
-        processBuilder.command("cmd.exe", "/c", cmd);
-
-        try {
-
-            processBuilder.directory(p.toFile());
-            Process process = processBuilder.start();
-            StreamGobbler streamGobbler =
-                    new StreamGobbler(process.getInputStream(), outpout);
-            StreamGobbler streamGobbler2 =
-                    new StreamGobbler(process.getErrorStream(), error);
-            ExecutorService tmp = Executors.newCachedThreadPool();
-            tmp.submit(streamGobbler);
-            tmp.submit(streamGobbler2);
-
-            return process.waitFor();
-        } catch (IOException|InterruptedException e) {
-            LOGGER.error("Erreur",e);
-        }
-        return -1;
-    }
-
-    private static class StreamGobbler implements Runnable {
-        private InputStream inputStream;
-        private Consumer<String> consumer;
-
-        public StreamGobbler(InputStream inputStream, Consumer<String> consumer) {
-            this.inputStream = inputStream;
-            this.consumer = consumer;
-        }
-
-        @Override
-        public void run() {
-            new BufferedReader(new InputStreamReader(inputStream)).lines()
-                    .forEach(consumer);
         }
     }
 
