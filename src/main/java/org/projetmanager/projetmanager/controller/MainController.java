@@ -15,7 +15,7 @@ import java.io.IOException;
 @Controller
 public class MainController {
 
-    public static final Logger LOGGER = LoggerFactory.getLogger(MainController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MainController.class);
 
     @Autowired
     private ProjectService projectService;

@@ -25,31 +25,19 @@
 <table class="table table-striped">
     <thead>
     <tr>
-        <th scope="col"> Name </th>
-        <th scope="col"> Path </th>
-        <th scope="col"> Version </th>
-        <th scope="col"> Parent </th>
-        <th scope="col"> Maven Name </th>
-        <th scope="col"> Npm Name </th>
+        <th scope="col"> Id </th>
+        <th scope="col"> cmd </th>
+        <th scope="col"> Running </th>
         <th scope="col"> Action </th>
     </tr>
     </thead>
     <tbody>
-    <tr th:if="${projectList == null}">
-        <td colspan="2"> No Projects Available </td>
+    <tr th:if="${processList == null}">
+        <td colspan="2"> No Process Available </td>
     </tr>
-    <tr th:each="project : ${projectList}">
-        <td><a th:href="@{/details/{id}(id=${project.id})}"><span th:text="${project.name}"> Name </span></a></td>
-        <td><span th:text="${project.path}"> Path </span></td>
-        <td><span th:text="${project.getGroupId()}"> Version </span> :
-            <span th:text="${project.getArtifactId()}"> Version </span> :
-            <strong th:text="${project.getVersion()}" style=""> Version </strong>
-            <span th:if="${project.getGroupId()}"> / </span>
-            <strong th:text="${project.getVersionNpm()}" style="" > Version NPM </strong>
-        </td>
-        <td><span th:text="${project.getArtifactParentVersion()}"> Parent </span></td>
-        <td><span th:text="${project.nameMaven}"> Maven Name </span></td>
-        <td><span th:text="${project.getNomNpm()}"> Npm Name </span></td>
+    <tr th:each="process : ${processList}">
+        <td><a th:href="@{/details/{id}(id=${process.id})}"><span th:text="${process.id}"> Id </span></a></td>
+        <td><span th:text="${process.cmd}"> Cmd </span></td>
         <td>
             <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -57,12 +45,12 @@
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" >
                 <li><a class="dropdown-item" href="#" th:onclick="exec2()">Action</a></li>
-                <li th:each="action : ${project.getListeActions()}">
-                    <a class="dropdown-item" href="#" th:text="${action.libelle()}"
-                       th:data-parameter1="${action.code()}"
-                       th:data-parameter2="${project.getId()}"
-                       th:onclick="exec3(this.getAttribute('data-parameter1'),this.getAttribute('data-parameter2'))">Another action</a>
-                </li>
+<!--                <li th:each="action : ${project.getListeActions()}">-->
+<!--                    <a class="dropdown-item" href="#" th:text="${action.libelle()}"-->
+<!--                       th:data-parameter1="${action.code()}"-->
+<!--                       th:data-parameter2="${project.getId()}"-->
+<!--                       th:onclick="exec3(this.getAttribute('data-parameter1'),this.getAttribute('data-parameter2'))">Another action</a>-->
+<!--                </li>-->
 <!--                <li><a class="dropdown-item" href="#">Something else here</a></li>-->
             </ul>
         </div>
@@ -74,8 +62,6 @@
 <a th:href="@{/personList}">Person List</a>
 
 <a th:href="@{/getmaven}">get maven</a>
-
-    <a th:href="@{/listRun}">List Run</a>
 
     <button type="button" th:onclick="showAlert()">Show Name</button>
     <button type="button" th:onclick="exec()">Exec</button>

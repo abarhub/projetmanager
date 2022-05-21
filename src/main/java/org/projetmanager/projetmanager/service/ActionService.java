@@ -1,5 +1,6 @@
 package org.projetmanager.projetmanager.service;
 
+import org.projetmanager.projetmanager.dto.ProcesRunDto;
 import org.projetmanager.projetmanager.properties.ScriptProperties;
 import org.projetmanager.projetmanager.utils.ProcessRun;
 import org.slf4j.Logger;
@@ -8,8 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 public class ActionService {
 
@@ -49,6 +54,17 @@ public class ActionService {
         LOGGER.info("run1");
         var res = runService.runNow("echo test", (x) -> LOGGER.info("out: {}", x), (x) -> LOGGER.error("err:{}", x), Path.of("."), false);
         LOGGER.info("fin run1: {}", res);
+    }
+
+    public List<ProcesRunDto> getProcessRunListDto(){
+        var list=new ArrayList<ProcesRunDto>();
+        for(var entry:processRunMap.entrySet()){
+            var process=entry.getValue();
+            var cmd=process.cmd().stream().collect(Collectors.joining(""));
+            ProcesRunDto procesRunDto=new ProcesRunDto(entry.getKey(),cmd,true);
+            list.add(procesRunDto);
+        }
+        return list;
     }
 
 }

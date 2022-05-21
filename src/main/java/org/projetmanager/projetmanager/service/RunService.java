@@ -46,21 +46,24 @@ public class RunService {
         Assert.hasText(cmd, "cmd empty");
 
         ProcessBuilder processBuilder = new ProcessBuilder();
-
+        List<String> list = new ArrayList<>();
         if (terminal) {
             var cmdBegin = List.of("cmd.exe", "/c",
                     "start",
                     "cmd Java" + ((StringUtils.hasText(name)) ? " " + name : ""),
                     "/WAIT");
             var cmdList = StrUtils.splitString(cmd);
-            List<String> list = new ArrayList<>();
+
             list.addAll(cmdBegin);
             list.addAll(cmdList);
             LOGGER.info("Run (with terminal): {}", list);
             processBuilder.command(list);
         } else {
             LOGGER.info("Run: {}", cmd);
-            processBuilder.command("cmd.exe", "/c", cmd);
+            list.add("cmd.exe");
+            list.add("/c");
+            list.add(cmd);
+            processBuilder.command(list);
         }
 
         try {
@@ -75,7 +78,7 @@ public class RunService {
             var futureOutput = executorService.submit(streamGobbler);
             var futureError = executorService.submit(streamGobbler2);
             return new ProcessRun(id.getAndIncrement(), streamGobbler, streamGobbler2,
-                    futureOutput, futureError, process);
+                    futureOutput, futureError, process, list);
 
         } catch (IOException e) {
             LOGGER.error("Erreur", e);
