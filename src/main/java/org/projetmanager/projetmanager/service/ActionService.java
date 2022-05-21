@@ -27,26 +27,28 @@ public class ActionService {
         this.scriptProperties = scriptProperties;
         this.projectService = projectService;
         this.runService = runService;
-        processRunMap=new ConcurrentHashMap<>();
+        processRunMap = new ConcurrentHashMap<>();
     }
 
     public long runAction(String action, long projetId) throws InterruptedException {
-        Assert.hasText(action,"Action empty");
-        var cmd=scriptProperties.getGlobal().get(action);
-        Assert.notNull(cmd,"Action not found");
-        Assert.hasText( cmd.getCmd(),"cmd empty for action "+action);
-        var project=projectService.getProjet(projetId).orElseThrow(()->new IllegalArgumentException("Projet "+projetId+" inexistant"));
-        LOGGER.info("runAction '{}' projet '{}' (path={})",action,projetId,project.getPath());
-        var res=runService.runAsync(cmd.getCmd(), (x)-> LOGGER.info("out: {}",x),(x)->LOGGER.error("err:{}",x), project.getPath(),cmd.isTerminal());
-        LOGGER.info("fin runAction: {}",res);
-        processRunMap.put(res.id(),res);
+        Assert.hasText(action, "Action empty");
+        var cmd = scriptProperties.getGlobal().get(action);
+        Assert.notNull(cmd, "Action not found");
+        Assert.hasText(cmd.getCmd(), "cmd empty for action " + action);
+        var project = projectService.getProjet(projetId).orElseThrow(() -> new IllegalArgumentException("Projet " + projetId + " inexistant"));
+        LOGGER.info("runAction '{}' projet '{}' (path={})", action, projetId, project.getPath());
+        var res = runService.runAsync(cmd.getCmd(), (x) -> LOGGER.info("out: {}", x),
+                (x) -> LOGGER.error("err:{}", x), project.getPath(), cmd.isTerminal(),
+                project.getName());
+        LOGGER.info("fin runAction: {}", res);
+        processRunMap.put(res.id(), res);
         return res.id();
     }
 
     public void run1() throws InterruptedException {
         LOGGER.info("run1");
-        var res=runService.runNow("echo test", (x)-> LOGGER.info("out: {}",x),(x)->LOGGER.error("err:{}",x), Path.of("."),false);
-        LOGGER.info("fin run1: {}",res);
+        var res = runService.runNow("echo test", (x) -> LOGGER.info("out: {}", x), (x) -> LOGGER.error("err:{}", x), Path.of("."), false);
+        LOGGER.info("fin run1: {}", res);
     }
 
 }

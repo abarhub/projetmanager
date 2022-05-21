@@ -11,8 +11,23 @@ script:
     maven-build-sans-tests:
       if-file: pom.xml
       cmd: mvn clean install -DskipTests
+    npm-install:
+      if-file: package.json
+      cmd: npm install
     echo:
       cmd: echo coucou2
     echo2:
-      cmd: pause
+      cmd: 'pause'
+      terminal: true
+    echo3:
+      cmd: echo coucou3
+      terminal: true
+    echo4:
+      cmd: echo 'coucou3 a tous'
+      terminal: true
+    echo5:
+      cmd: echo "coucou3 a tous"
+      terminal: true
+    echo6:
+      cmd: echo 'app=%APP%,os=%OS%,CD=%CD%'
       terminal: true
