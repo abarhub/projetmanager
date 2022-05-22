@@ -20,7 +20,7 @@ import java.util.function.Consumer;
 
 public class RunService {
 
-    public static final Logger LOGGER = LoggerFactory.getLogger(RunService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RunService.class);
 
     private final ExecutorService executorService;
 
@@ -36,14 +36,14 @@ public class RunService {
         if (processRun == null) {
             return -1;
         } else {
-            return processRun.process().waitFor();
+            return processRun.waitFor();
         }
     }
 
     public ProcessRun runAsync(String cmd, Consumer<String> outpout, Consumer<String> error,
                                Path p, boolean terminal, String name) {
 
-        Assert.hasText(cmd, "cmd empty");
+        Assert.hasText(cmd, "cmd is empty");
 
         ProcessBuilder processBuilder = new ProcessBuilder();
         List<String> list = new ArrayList<>();
@@ -72,9 +72,9 @@ public class RunService {
             processBuilder.directory(p.toFile());
             Process process = processBuilder.start();
             StreamGobbler streamGobbler =
-                    new StreamGobbler(process.getInputStream(), outpout);
+                    new StreamGobbler(process.getInputStream(), outpout, false);
             StreamGobbler streamGobbler2 =
-                    new StreamGobbler(process.getErrorStream(), error);
+                    new StreamGobbler(process.getErrorStream(), error, true);
             var futureOutput = executorService.submit(streamGobbler);
             var futureError = executorService.submit(streamGobbler2);
             return new ProcessRun(id.getAndIncrement(), streamGobbler, streamGobbler2,
@@ -91,7 +91,7 @@ public class RunService {
         if (StringUtils.hasText(name)) {
             env.put("APP", name);
         } else {
-            env.put("APP", "Appli");
+            env.put("APP", "Application");
         }
     }
 

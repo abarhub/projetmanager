@@ -38,6 +38,7 @@
     <tr th:each="process : ${processList}">
         <td><a th:href="@{/details/{id}(id=${process.id})}"><span th:text="${process.id}"> Id </span></a></td>
         <td><span th:text="${process.cmd}"> Cmd </span></td>
+        <td><span th:text="${process.running()}"> Cmd </span></td>
         <td>
             <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -62,6 +63,7 @@
 <a th:href="@{/personList}">Person List</a>
 
 <a th:href="@{/getmaven}">get maven</a>
+    <a th:href="@{/}">home</a>
 
     <button type="button" th:onclick="showAlert()">Show Name</button>
     <button type="button" th:onclick="exec()">Exec</button>

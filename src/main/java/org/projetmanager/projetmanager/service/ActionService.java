@@ -46,8 +46,8 @@ public class ActionService {
                 (x) -> LOGGER.error("err:{}", x), project.getPath(), cmd.isTerminal(),
                 project.getName());
         LOGGER.info("fin runAction: {}", res);
-        processRunMap.put(res.id(), res);
-        return res.id();
+        processRunMap.put(res.getId(), res);
+        return res.getId();
     }
 
     public void run1() throws InterruptedException {
@@ -56,12 +56,12 @@ public class ActionService {
         LOGGER.info("fin run1: {}", res);
     }
 
-    public List<ProcesRunDto> getProcessRunListDto(){
-        var list=new ArrayList<ProcesRunDto>();
-        for(var entry:processRunMap.entrySet()){
-            var process=entry.getValue();
-            var cmd=process.cmd().stream().collect(Collectors.joining(""));
-            ProcesRunDto procesRunDto=new ProcesRunDto(entry.getKey(),cmd,true);
+    public List<ProcesRunDto> getProcessRunListDto() {
+        var list = new ArrayList<ProcesRunDto>();
+        for (var entry : processRunMap.entrySet()) {
+            var process = entry.getValue();
+            var cmd = process.getCmd().stream().collect(Collectors.joining(""));
+            ProcesRunDto procesRunDto = new ProcesRunDto(entry.getKey(), cmd, !process.isFinished());
             list.add(procesRunDto);
         }
         return list;
