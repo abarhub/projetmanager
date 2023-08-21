@@ -1,6 +1,7 @@
 package org.projetmanager.projetmanager.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.annotation.PostConstruct;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.projetmanager.projetmanager.domain.Project;
 import org.projetmanager.projetmanager.domain.ProjectMaven;
@@ -20,7 +21,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
-import javax.annotation.PostConstruct;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.xpath.XPath;
