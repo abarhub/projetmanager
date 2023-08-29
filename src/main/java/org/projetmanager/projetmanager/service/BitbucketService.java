@@ -17,6 +17,8 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 
 
+import javax.swing.*;
+import java.awt.*;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.ArrayList;
@@ -192,6 +194,7 @@ public class BitbucketService {
                             }
                             line.add(htmlLink2);
                         }
+                        afficheAlerte(listValues);
                     }
 
                     return tableDto;
@@ -203,6 +206,48 @@ public class BitbucketService {
         }
 
         return null;
+    }
+
+    private void afficheAlerte(JsonNode listValues) throws AWTException {
+        if(listValues!=null&&listValues.isArray()&&!listValues.isEmpty()){
+            int nb=listValues.size();
+            if(nb>0){
+
+                SwingUtilities.invokeLater(() -> {
+                    //createAndShowGUI();
+                    try {
+                        displayTray("il y a des PR : "+nb,"Il y a "+nb+" PR à regarder");
+                    } catch (AWTException e) {
+                        LOGGER.atError().log("Erreur",e);
+                    }
+                });
+
+//                displayTray("il y a des PR : "+nb,"Il y a "+nb+" PR à regarder");
+            }
+        }
+    }
+
+    private void displayTray(String message, String message2) throws AWTException {
+        if (SystemTray.isSupported()) {
+            //Obtain only one instance of the SystemTray object
+            SystemTray tray = SystemTray.getSystemTray();
+
+            //If the icon is a file
+            Image image = Toolkit.getDefaultToolkit().createImage("icon.png");
+            //Alternative (if the icon is on the classpath):
+            //Image image = Toolkit.getDefaultToolkit().createImage(getClass().getResource("icon.png"));
+
+            TrayIcon trayIcon = new TrayIcon(image, "Tray Demo");
+            //Let the system resize the image if needed
+            trayIcon.setImageAutoSize(true);
+            //Set tooltip text for the tray icon
+            trayIcon.setToolTip("System tray icon demo");
+            tray.add(trayIcon);
+
+            trayIcon.displayMessage(message, message2, TrayIcon.MessageType.INFO);
+        } else {
+            LOGGER.atWarn().log("System tray not supported !");
+        }
     }
 
     private String toString(JsonNode node) {
