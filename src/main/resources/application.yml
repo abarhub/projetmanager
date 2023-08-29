@@ -31,3 +31,9 @@ script:
     echo6:
       cmd: echo 'app=%APP%,os=%OS%,CD=%CD%'
       terminal: true
+
+
+logging.level.org.springframework.web.client.RestTemplate: DEBUG
+
+logging.level.org.apache.http: DEBUG
+logging.level.httpclient.wire: DEBUG
