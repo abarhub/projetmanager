@@ -1,0 +1,45 @@
+
+
+app:
+  default:
+    size: 5
+    minWidth: 16em
+    maxWidth:
+    jira:
+      url:
+      user:
+      password:
+    bitbucket:
+      urlToken:
+      url:
+      clientId:
+      secretKey:
+  api:
+    indicator:
+      list_posts:
+        name: Liste des posts
+        url: https://jsonplaceholder.typicode.com/posts
+        columns:
+      list_comments:
+        name: Liste des commentaires
+        url: https://jsonplaceholder.typicode.com/comments
+        columns: name,email,body
+        rowSize: 10
+      health:
+        name: Health
+        url: http://localhost:8080/actuator/health
+        type: springBootActuator
+      jira:
+        name: Dernières pages
+        type: jira
+        properties:
+          query: issuekey in issueHistory() ORDER BY lastViewed DESC
+      bitbucket1:
+        name: Liste des PR
+        type: bitbucket
+        properties:
+          url: '/2.0/repositories/abarhubi/testdashboard1/pullrequests'
+
+
+
+

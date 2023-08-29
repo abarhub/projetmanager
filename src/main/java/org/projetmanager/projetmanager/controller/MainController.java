@@ -49,4 +49,13 @@ public class MainController {
         return "details";
     }
 
+    @RequestMapping(value = {"/dashboard"}, method = RequestMethod.GET)
+    public String dashboard(Model model) {
+        LOGGER.info("dashboard");
+
+        model.addAttribute("message", "aaa");
+
+        return "dashboard";
+    }
+
 }
