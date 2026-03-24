@@ -94,8 +94,8 @@
         <profile>
             <id>sonar</id>
             <properties>
-                <sonar.projectKey>minidash-webapp</sonar.projectKey>
-                <sonar.projectName>minidash-webapp</sonar.projectName>
+                <sonar.projectKey>projetmanager</sonar.projectKey>
+                <sonar.projectName>projetmanager</sonar.projectName>
                 <sonar.coverage.jacoco.xmlReportPaths>
                     target/site/jacoco/jacoco.xml
                 </sonar.coverage.jacoco.xmlReportPaths>
